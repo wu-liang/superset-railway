@@ -1,51 +1,58 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS"
+    "builder": "NIXPACKS",
+    "nixpacksPlan": {
+      "providers": [
+        {
+          "name": "python"
+        }
+      ]
+    }
   },
   "services": [
     {
       "name": "superset-init",
-      "type": "service:dockerfile",
-      "source": {
-        "type": "repository",
-        "repo": "https://github.com/wu-liang/superset-railway",
+      "deploy": {
+        "type": "dockerfile",
+        "repo": "wu-liang/superset-railway",
         "branch": "main",
+        "path": ".",
         "dockerfilePath": "./Dockerfile"
       },
-      "startCommand": "superset db upgrade && superset init",
-      "volumes": [
+      "run": "superset db upgrade && superset init",
+      "disks": [
         {
           "name": "superset-config",
           "mountPath": "/app/pythonpath"
         }
       ],
-      "envs": [
+      "env": [
         {
-          "name": "SECRET_KEY",
+          "key": "SECRET_KEY",
           "required": true,
           "description": "A strong secret key for Superset encryption (generate with `openssl rand -base64 32`)"
         },
         {
-          "name": "REDIS_URL",
+          "key": "REDIS_URL",
           "value": "${{redis.REDIS_URL}}",
           "required": true,
           "description": "Redis URL for caching and Celery broker"
         },
         {
-          "name": "DATABASE_URL",
+          "key": "DATABASE_URL",
           "value": "${{postgres.DATABASE_URL}}",
           "required": true,
           "description": "PostgreSQL URI for Superset metadata"
         },
         {
-          "name": "PYTHONPATH",
+          "key": "PYTHONPATH",
           "value": "/app/pythonpath",
           "required": true,
           "description": "Path to custom Superset configuration"
         },
         {
-          "name": "MAPBOX_API_KEY",
+          "key": "MAPBOX_API_KEY",
           "required": false,
           "description": "Optional Mapbox API key for map visualizations"
         }
@@ -53,11 +60,11 @@
     },
     {
       "name": "superset-app",
-      "type": "service:dockerfile",
-      "source": {
-        "type": "repository",
-        "repo": "https://github.com/wu-liang/superset-railway",
+      "deploy": {
+        "type": "dockerfile",
+        "repo": "wu-liang/superset-railway",
         "branch": "main",
+        "path": ".",
         "dockerfilePath": "./Dockerfile"
       },
       "ports": [
@@ -66,8 +73,8 @@
           "protocol": "TCP"
         }
       ],
-      "startCommand": "/app/docker/entrypoints/run-server.sh",
-      "volumes": [
+      "run": "/app/docker/entrypoints/run-server.sh",
+      "disks": [
         {
           "name": "superset-config",
           "mountPath": "/app/pythonpath"
@@ -77,33 +84,33 @@
           "mountPath": "/app/superset_home"
         }
       ],
-      "envs": [
+      "env": [
         {
-          "name": "SECRET_KEY",
+          "key": "SECRET_KEY",
           "required": true
         },
         {
-          "name": "TAG",
+          "key": "TAG",
           "value": "5.0.0",
           "description": "Superset image tag"
         },
         {
-          "name": "REDIS_URL",
+          "key": "REDIS_URL",
           "value": "${{redis.REDIS_URL}}",
           "required": true
         },
         {
-          "name": "DATABASE_URL",
+          "key": "DATABASE_URL",
           "value": "${{postgres.DATABASE_URL}}",
           "required": true
         },
         {
-          "name": "PYTHONPATH",
+          "key": "PYTHONPATH",
           "value": "/app/pythonpath",
           "required": true
         },
         {
-          "name": "MAPBOX_API_KEY",
+          "key": "MAPBOX_API_KEY",
           "required": false
         }
       ],
@@ -116,37 +123,37 @@
     },
     {
       "name": "superset-worker",
-      "type": "service:dockerfile",
-      "source": {
-        "type": "repository",
-        "repo": "https://github.com/wu-liang/superset-railway",
+      "deploy": {
+        "type": "dockerfile",
+        "repo": "wu-liang/superset-railway",
         "branch": "main",
+        "path": ".",
         "dockerfilePath": "./Dockerfile"
       },
-      "startCommand": "celery --app=superset.tasks.celery_app:app worker --pool=prefork -O fair -c 4",
-      "volumes": [
+      "run": "celery --app=superset.tasks.celery_app:app worker --pool=prefork -O fair -c 4",
+      "disks": [
         {
           "name": "superset-config",
           "mountPath": "/app/pythonpath"
         }
       ],
-      "envs": [
+      "env": [
         {
-          "name": "SECRET_KEY",
+          "key": "SECRET_KEY",
           "required": true
         },
         {
-          "name": "REDIS_URL",
+          "key": "REDIS_URL",
           "value": "${{redis.REDIS_URL}}",
           "required": true
         },
         {
-          "name": "DATABASE_URL",
+          "key": "DATABASE_URL",
           "value": "${{postgres.DATABASE_URL}}",
           "required": true
         },
         {
-          "name": "PYTHONPATH",
+          "key": "PYTHONPATH",
           "value": "/app/pythonpath",
           "required": true
         }
@@ -154,37 +161,37 @@
     },
     {
       "name": "superset-worker-beat",
-      "type": "service:dockerfile",
-      "source": {
-        "type": "repository",
-        "repo": "https://github.com/wu-liang/superset-railway",
+      "deploy": {
+        "type": "dockerfile",
+        "repo": "wu-liang/superset-railway",
         "branch": "main",
+        "path": ".",
         "dockerfilePath": "./Dockerfile"
       },
-      "startCommand": "celery --app=superset.tasks.celery_app:app beat --pidfile= --schedule=/tmp/celerybeat-schedule",
-      "volumes": [
+      "run": "celery --app=superset.tasks.celery_app:app beat --pidfile= --schedule=/tmp/celerybeat-schedule",
+      "disks": [
         {
           "name": "superset-config",
           "mountPath": "/app/pythonpath"
         }
       ],
-      "envs": [
+      "env": [
         {
-          "name": "SECRET_KEY",
+          "key": "SECRET_KEY",
           "required": true
         },
         {
-          "name": "REDIS_URL",
+          "key": "REDIS_URL",
           "value": "${{redis.REDIS_URL}}",
           "required": true
         },
         {
-          "name": "DATABASE_URL",
+          "key": "DATABASE_URL",
           "value": "${{postgres.DATABASE_URL}}",
           "required": true
         },
         {
-          "name": "PYTHONPATH",
+          "key": "PYTHONPATH",
           "value": "/app/pythonpath",
           "required": true
         }
@@ -192,28 +199,28 @@
     },
     {
       "name": "redis",
-      "type": "service:database",
+      "type": "database",
       "image": "redis:7-alpine"
     },
     {
       "name": "postgres",
-      "type": "service:database",
+      "type": "database",
       "image": "postgres:16",
-      "envs": [
+      "env": [
         {
-          "name": "POSTGRES_USER",
+          "key": "POSTGRES_USER",
           "value": "superset"
         },
         {
-          "name": "POSTGRES_PASSWORD",
+          "key": "POSTGRES_PASSWORD",
           "value": "superset"
         },
         {
-          "name": "POSTGRES_DB",
+          "key": "POSTGRES_DB",
           "value": "superset"
         }
       ],
-      "volumes": [
+      "disks": [
         {
           "name": "postgres-data",
           "mountPath": "/var/lib/postgresql/data"
