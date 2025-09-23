@@ -9,7 +9,7 @@
       "type": "service:dockerfile",
       "source": {
         "type": "repository",
-        "repo": "https://github.com/wu-lang/superset-railway-template",
+        "repo": "https://github.com/wu-lang/superset-railway",
         "branch": "main",
         "dockerfilePath": "./Dockerfile"
       },
@@ -56,7 +56,7 @@
       "type": "service:dockerfile",
       "source": {
         "type": "repository",
-        "repo": "https://github.com/wu-lang/superset-railway-template",
+        "repo": "https://github.com/wu-lang/superset-railway",
         "branch": "main",
         "dockerfilePath": "./Dockerfile"
       },
@@ -119,7 +119,7 @@
       "type": "service:dockerfile",
       "source": {
         "type": "repository",
-        "repo": "https://github.com/wu-lang/superset-railway-template",
+        "repo": "https://github.com/wu-lang/superset-railway",
         "branch": "main",
         "dockerfilePath": "./Dockerfile"
       },
@@ -157,7 +157,7 @@
       "type": "service:dockerfile",
       "source": {
         "type": "repository",
-        "repo": "https://github.com/wu-lang/superset-railway-template",
+        "repo": "https://github.com/wu-lang/superset-railway",
         "branch": "main",
         "dockerfilePath": "./Dockerfile"
       },
