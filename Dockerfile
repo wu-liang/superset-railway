@@ -30,8 +30,18 @@ RUN . /app/.venv/bin/activate && \
     playwright install-deps && \
     PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright-browsers playwright install chromium
 
-# Switch back to superset user
+ENV ADMIN_USERNAME $ADMIN_USERNAME
+ENV ADMIN_EMAIL $ADMIN_EMAIL
+ENV ADMIN_PASSWORD $ADMIN_PASSWORD
+ENV DATABASE $DATABASE
+
+COPY /config/superset_init.sh ./superset_init.sh
+RUN chmod +x ./superset_init.sh
+
+COPY /config/superset_config.py /app/
+ENV SUPERSET_CONFIG_PATH /app/superset_config.py
+ENV SECRET_KEY $SECRET_KEY
+
 USER superset
 
-# Default command (overridable for worker or beat)
-CMD ["/app/docker/entrypoints/run-server.sh"]
+ENTRYPOINT [ "./superset_init.sh" ]
