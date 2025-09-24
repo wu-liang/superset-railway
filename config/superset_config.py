@@ -58,6 +58,9 @@ DATA_CACHE_CONFIG = {
     'CACHE_REDIS_URL': os.environ.get('REDIS_URL', 'redis://redis:6379/0')
 }
 
+# Rate limiting storage using Redis
+RATELIMIT_STORAGE_URI = os.environ.get('REDIS_URL', 'redis://redis:6379/0')
+
 # Database URI (injected via DATABASE_URL environment variable, with official default fallback)
 SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'postgresql+psycopg2://superset:superset@db:5432/superset')
 
