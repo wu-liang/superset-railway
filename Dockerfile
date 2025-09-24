@@ -43,5 +43,3 @@ ENV SUPERSET_CONFIG_PATH /app/superset_config.py
 ENV SECRET_KEY $SECRET_KEY
 
 USER superset
-
-ENTRYPOINT [ "./superset_init.sh" ]
