@@ -8,6 +8,7 @@ FEATURE_FLAGS = {
     'PLAYWRIGHT_REPORTS_AND_THUMBNAILS': True,  # Enable Playwright screenshots
     'THUMBNAILS': True,  # Enable thumbnail generation
     'THUMBNAILS_SQLA_LISTENERS': True,  # Enable thumbnail listeners
+    'SUPERSET_FEATURE_EMBEDDED_SUPERSET': True,    # Enable embeded
 }
 
 # Celery configuration for async tasks and scheduling
