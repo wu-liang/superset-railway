@@ -17,8 +17,7 @@ class CeleryConfig:
     imports = (
         'superset.sql_lab',
         'superset.tasks.thumbnails',  # Thumbnail tasks
-        'superset.tasks.alerts',  # Alert tasks
-        'superset.tasks.reports',  # Report tasks
+        'superset.tasks.scheduler'
     )
     # Redis as result backend
     result_backend = os.environ.get('REDIS_URL', 'redis://redis:6379/0')
