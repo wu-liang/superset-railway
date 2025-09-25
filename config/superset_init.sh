@@ -3,12 +3,6 @@ set -euo pipefail
 
 echo "[init] Starting Superset init..."
 
-# Bind Gunicorn to the Railway-assigned port (fallback to 8088 for local/dev)
-export SUPERSET_BIND_ADDRESS="${SUPERSET_BIND_ADDRESS:-::}"  # Changed to :: for IPv6
-export SUPERSET_PORT="${PORT:-${SUPERSET_PORT:-8088}}"
-
-echo "[init] Will bind to ${SUPERSET_BIND_ADDRESS}:${SUPERSET_PORT}"
-
 # --- Database migrations ---
 echo "[init] Upgrading Superset metastore..."
 superset db upgrade
@@ -31,5 +25,5 @@ echo "[init] Running 'superset init'..."
 superset init
 
 # --- Start web server (becomes PID 1) ---
-echo "[init] Launching web server..."
+echo "[init] Launching web server on [::]:${PORT:-8088}..."
 exec /usr/bin/run-server.sh
