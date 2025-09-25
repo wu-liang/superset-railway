@@ -1,5 +1,7 @@
 # Apache Superset on Railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/RQkAUJ?referralCode=J5bd73&utm_medium=integration&utm_source=template&utm_campaign=generic)
+
 This project provides a ready-to-deploy configuration of [**Apache Superset**](https://superset.apache.org/) on [Railway](https://railway.app).\
 It includes support for:
 
