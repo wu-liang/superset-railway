@@ -1,10 +1,30 @@
 import os
+from typing import Optional
+
+# -----------------------------
+# Helpers: safe env parsing
+# -----------------------------
+def env_str(name: str, default: Optional[str] = None) -> Optional[str]:
+    v = os.getenv(name)
+    return v if (v is not None and v.strip() != "") else default
+
+def env_int(name: str, default: int) -> int:
+    v = os.getenv(name)
+    try:
+        return int(v)
+    except (TypeError, ValueError):
+        return default
+
+def env_bool(name: str, default: bool = False) -> bool:
+    v = os.getenv(name)
+    if v is None:
+        return default
+    return str(v).strip().lower() in {"1", "true", "yes", "on"}
 
 # =============================
 # Core security & database
 # =============================
-# Secret key for signing cookies and CSRF tokens. MUST be a strong random value in production.
-SECRET_KEY = os.environ.get("SECRET_KEY", "CHANGE_ME_TO_A_LONG_RANDOM_STRING")
+SECRET_KEY = env_str("SECRET_KEY", "CHANGE_ME_TO_A_LONG_RANDOM_STRING")
 
 # Main metadata database for Superset (Postgres recommended in production).
 # Railway Postgres plugin usually injects DATABASE_URL automatically.
@@ -93,13 +113,11 @@ CELERY_CONFIG = CeleryConfig
 # =============================
 # Set EMAIL_NOTIFICATIONS=True and configure SMTP_* if you need emails.
 EMAIL_NOTIFICATIONS = os.getenv("EMAIL_NOTIFICATIONS", "False").lower() == "true"
-SMTP_HOST = os.getenv("SMTP_HOST", "")
-SMTP_STARTTLS = os.getenv("SMTP_STARTTLS", "True").lower() == "true"
-SMTP_SSL = os.getenv("SMTP_SSL", "False").lower() == "true"
-SMTP_USER = os.getenv("SMTP_USER", "")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
-SMTP_MAIL_FROM = os.getenv("SMTP_MAIL_FROM", "no-reply@example.com")
+SMTP_HOST = env_str("SMTP_HOST")
+SMTP_PORT = env_int("SMTP_PORT", 587)
+SMTP_USER = env_str("SMTP_USER")
+SMTP_PASSWORD = env_str("SMTP_PASSWORD")
+SMTP_MAIL_FROM = env_str("SMTP_MAIL_FROM", "no-reply@example.com")
 
 
 # =============================
