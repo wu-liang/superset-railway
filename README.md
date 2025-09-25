@@ -46,9 +46,6 @@ graph TD
 
 ## **3. Environment Variables**
 
-Railway automatically injects the `DATABASE_URL` and `REDIS_URL` variables when you add PostgreSQL and Redis plugins.\
-You **do NOT need to manually configure these two variables**.
-
 Below are the variables you should configure manually in **Railway → Variables**:
 
 | Variable Name                                                                | Required                  | Description                                                                                                        |
