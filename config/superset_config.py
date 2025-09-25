@@ -169,6 +169,12 @@ frame_ancestors_env = os.getenv("FRAME_ANCESTORS", "")
 frame_ancestors_list = [x.strip() for x in frame_ancestors_env.split(",") if x.strip()]
 
 TALISMAN_CONFIG = {
+    # Disable automatic HTTP → HTTPS redirects.
+    # This is required because the superset-worker service (Playwright)
+    # connects to superset-app using the internal Railway domain (HTTP only).
+    # Without this, all internal HTTP requests would be redirected to HTTPS,
+    # causing Playwright to fail when generating reports or thumbnails.
+    "force_https": False, 
     "content_security_policy": {
         # Allow the hosts that are permitted to frame Superset.
         # Fallback to "'self'" if not set.
