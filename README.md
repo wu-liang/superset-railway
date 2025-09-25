@@ -57,6 +57,7 @@ SECRET_KEY=your_random_secret_key
 DATABASE_URL= # auto-injected by Railway Postgres plugin
 REDIS_URL= # auto-injected by Railway Redis plugin
 GUEST_TOKEN_JWT_SECRET=your_guest_token_secret
+TAG= # superset image tag, default is 5.0.0
 
 # Initial admin user (optional but recommended)
 ADMIN_USERNAME=admin
