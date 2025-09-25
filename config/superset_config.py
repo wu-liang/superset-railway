@@ -1,5 +1,6 @@
 import os
 from typing import Optional
+from celery.schedules import crontab
 
 # -----------------------------
 # Helpers: safe env parsing
@@ -123,6 +124,9 @@ CELERY_CONFIG = CeleryConfig
 SCREENSHOT_LOCATE_WAIT = 100
 SCREENSHOT_LOAD_WAIT = 600
 
+# Slack configuration
+SLACK_API_TOKEN = "xoxb-"
+
 # =============================
 # Email (for Alerts/Reports) - optional
 # =============================
@@ -137,23 +141,7 @@ SMTP_MAIL_FROM = env_str("SMTP_MAIL_FROM", "no-reply@example.com")
 # =============================
 # Thumbnails / Playwright base URL
 # =============================
-# Use your public Railway URL (or custom domain) so Playwright can reach the site
-PUBLIC_BASE_URL = env_str("WEBDRIVER_BASEURL") or env_str("PUBLIC_BASE_URL")
 
-# Fallbacks (helpful in local/dev)
-if not PUBLIC_BASE_URL:
-    # Construct a local URL for dev; Railway will set PORT dynamically, but
-    # thumbnails should use the public domain in production (above).
-    port = env_str("PORT") or env_str("SUPERSET_PORT") or "8088"
-    PUBLIC_BASE_URL = f"http://127.0.0.1:{port}"
-
-# Superset uses this for screenshots / thumbnails / alerts
-WEBDRIVER_BASEURL = PUBLIC_BASE_URL
-
-# Allow headless login for thumbnails (matches your bootstrap admin)
-THUMBNAIL_SELENIUM_USER = env_str("THUMBNAIL_SELENIUM_USER", env_str("ADMIN_USERNAME"))
-THUMBNAIL_SELENIUM_PASSWORD = env_str("THUMBNAIL_SELENIUM_PASSWORD", env_str("ADMIN_PASSWORD"))
-ENABLE_THUMBNAILS = env_bool("ENABLE_THUMBNAILS", True)
 
 # =============================
 # Embedded: guest token settings
