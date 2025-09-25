@@ -4,7 +4,7 @@ set -euo pipefail
 echo "[init] Starting Superset init..."
 
 # Bind Gunicorn to the Railway-assigned port (fallback to 8088 for local/dev)
-export SUPERSET_BIND_ADDRESS="${SUPERSET_BIND_ADDRESS:-0.0.0.0}"
+export SUPERSET_BIND_ADDRESS="${SUPERSET_BIND_ADDRESS:-::}"  # Changed to :: for IPv6
 export SUPERSET_PORT="${PORT:-${SUPERSET_PORT:-8088}}"
 
 echo "[init] Will bind to ${SUPERSET_BIND_ADDRESS}:${SUPERSET_PORT}"
