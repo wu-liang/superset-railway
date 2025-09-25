@@ -66,7 +66,7 @@ Below are the variables you should configure manually in **Railway → Variables
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASSWORD` / `SMTP_MAIL_FROM` | Optional                  | SMTP config for emails                                                                                             |
 | `TALISMAN_ENABLED`                                                           | Optional                  | Default `True`. Controls security headers (CSP, X-Frame-Options).                                                  |
 | `FRAME_ANCESTORS`                                                            | ⚙️ Required for embedding | Comma-separated list of allowed embedding origins.Example: `https://frontend.example.com,https://*.up.railway.app` |
-| `WEB_CONCURRENCY`                                                            | Optional                  | Gunicorn worker count (default: 4)                                                                                 |
+| `SERVER_WORKER_AMOUNT`                                                            | Optional                  | Gunicorn worker count (default: 1)                                                                                 |
 
 ---
 
