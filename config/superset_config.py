@@ -95,18 +95,34 @@ RATELIMIT_STORAGE_URI = REDIS_URL or "memory://"
 class CeleryConfig:
     broker_url = REDIS_URL
     result_backend = REDIS_URL
-    # Reasonable defaults for small containers
-    worker_prefetch_multiplier = 1
+    imports = (
+        "superset.sql_lab",
+        "superset.tasks.scheduler",
+    )
+    result_backend = f"redis://{REDIS_HOST}:{REDIS_PORT}/0"
+    worker_prefetch_multiplier = 10
     task_acks_late = True
     task_annotations = {
-        # Example rate limit for heavy tasks
-        "sql_lab.get_sql_results": {"rate_limit": "100/s"},
+        "sql_lab.get_sql_results": {
+            "rate_limit": "100/s",
+        },
     }
-    # Define beat_schedule here if you need periodic Celery tasks
+    beat_schedule = {
+        "reports.scheduler": {
+            "task": "reports.scheduler",
+            "schedule": crontab(minute="*", hour="*"),
+        },
+        "reports.prune_log": {
+            "task": "reports.prune_log",
+            "schedule": crontab(minute=0, hour=0),
+        },
+    }
 
 # Tell Superset to use the CeleryConfig above
 CELERY_CONFIG = CeleryConfig
 
+SCREENSHOT_LOCATE_WAIT = 100
+SCREENSHOT_LOAD_WAIT = 600
 
 # =============================
 # Email (for Alerts/Reports) - optional
