@@ -99,7 +99,6 @@ class CeleryConfig:
         "superset.sql_lab",
         "superset.tasks.scheduler",
     )
-    result_backend = f"redis://{REDIS_HOST}:{REDIS_PORT}/0"
     worker_prefetch_multiplier = 10
     task_acks_late = True
     task_annotations = {
