@@ -143,6 +143,18 @@ SMTP_MAIL_FROM = env_str("SMTP_MAIL_FROM", "no-reply@example.com")
 # =============================
 WEBDRIVER_BASEURL = env_str("WEBDRIVER_BASEURL")
 
+# Make Playwright/Chromium bypass any proxy and be container-friendly
+WEBDRIVER_CONFIGURATION = {
+    "type": "chromium",
+    # Extra Chromium flags for containers + no proxy
+    "args": [
+        "--no-sandbox",
+        "--disable-dev-shm-usage",
+        "--no-proxy-server",
+        "--proxy-bypass-list=*.railway.internal,localhost,127.0.0.1",
+    ],
+}
+
 # =============================
 # Embedded: guest token settings
 # =============================
