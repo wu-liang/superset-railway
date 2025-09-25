@@ -154,8 +154,7 @@ GUEST_TOKEN_JWT_ALGO = "HS256"
 # Assign the minimal role the embedded user should have (consider creating a custom, read-only role).
 GUEST_ROLE_NAME = env_str("GUEST_ROLE_NAME", "Gamma")
 # Token lifetime in seconds
-GUEST_TOKEN_EXP_SECONDS = env_int("GUEST_TOKEN_EXP_SECONDS", "600"))
-
+GUEST_TOKEN_EXP_SECONDS = env_int("GUEST_TOKEN_EXP_SECONDS", "600")
 
 # =============================
 # Security headers / CSP for embedding (environment-driven)
@@ -183,4 +182,4 @@ TALISMAN_CONFIG = {
 # =============================
 # Optional: Mapbox API key
 # =============================
-# MAPBOX_API_KEY = env_str("MAPBOX_API_KEY", "")
+MAPBOX_API_KEY = env_str("MAPBOX_API_KEY", "")
