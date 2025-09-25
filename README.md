@@ -46,10 +46,39 @@ graph TD
 
 ---
 
-## **3. Environment Variables**
+## 3. Environment Variables
 
-Below are the variables you should configure manually in **Railway → Variables**:
+Below are the variables you should configure manually in **Railway → Project Settings → Shared Variables**:
 
+### Copy & Paste Example
+```bash
+# Required
+SECRET_KEY=your_random_secret_key
+DATABASE_URL= # auto-injected by Railway Postgres plugin
+REDIS_URL= # auto-injected by Railway Redis plugin
+GUEST_TOKEN_JWT_SECRET=your_guest_token_secret
+
+# Initial admin user (optional but recommended)
+ADMIN_USERNAME=admin
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=SuperSecret123!
+
+# Optional configurations
+EMAIL_NOTIFICATIONS=True
+SMTP_HOST=
+SMTP_PORT=
+SMTP_USER=
+SMTP_PASSWORD=
+SMTP_MAIL_FROM=
+
+# Security headers & embedding
+TALISMAN_ENABLED=True
+FRAME_ANCESTORS=https://frontend.example.com,https://*.up.railway.app
+
+# Performance tuning
+SERVER_WORKER_AMOUNT=1
+
+```
 | Variable Name                                                                | Required                  | Description                                                                                                        |
 | ---------------------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `DATABASE_URL`                                                               | ✅                         | Injected automatically when using Railway Postgres plugin                                                          |
@@ -65,9 +94,8 @@ Below are the variables you should configure manually in **Railway → Variables
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASSWORD` / `SMTP_MAIL_FROM` | Optional                  | SMTP config for emails                                                                                             |
 | `TALISMAN_ENABLED`                                                           | Optional                  | Default `True`. Controls security headers (CSP, X-Frame-Options).                                                  |
 | `FRAME_ANCESTORS`                                                            | ⚙️ Required for embedding | Comma-separated list of allowed embedding origins.Example: `https://frontend.example.com,https://*.up.railway.app` |
-| `SERVER_WORKER_AMOUNT`                                                            | Optional                  | Gunicorn worker count (default: 1)                                                                                 |
+| `SERVER_WORKER_AMOUNT`                                                       | Optional                  | Gunicorn worker count (default: 1)                                                                                 |
 
----
 
 ## **4. Deploying to Railway**
 
