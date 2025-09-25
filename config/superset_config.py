@@ -142,6 +142,7 @@ SMTP_MAIL_FROM = env_str("SMTP_MAIL_FROM", "no-reply@example.com")
 # Thumbnails / Playwright base URL
 # =============================
 WEBDRIVER_BASEURL = env_str("WEBDRIVER_BASEURL")
+WEBDRIVER_BASEURL_USER_FRIENDLY = env_str("WEBDRIVER_BASEURL_USER_FRIENDLY")
 
 # =============================
 # Embedded: guest token settings
