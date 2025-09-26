@@ -56,6 +56,8 @@ FEATURE_FLAGS = {
     "THUMBNAILS": True,
     "THUMBNAILS_SQLA_LISTENERS": True,
     "PLAYWRIGHT_REPORTS_AND_THUMBNAILS": True,
+    "ALLOW_UPLOAD_CSV": True,  # Enables CSV upload
+    "ALLOW_UPLOAD_EXCEL": True,  # Enables Excel upload (.xlsx, .xls)
 }
 
 
