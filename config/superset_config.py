@@ -41,6 +41,9 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 # so Superset respects X-Forwarded-* headers for scheme/host.
 ENABLE_PROXY_FIX = True
 
+# Logging level for Superset (DEBUG for detailed logs during troubleshooting)
+SUPERSET_LOG_LEVEL = env_str("SUPERSET_LOG_LEVEL", "INFO")
+
 
 # =============================
 # Feature flags
