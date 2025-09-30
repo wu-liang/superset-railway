@@ -157,6 +157,8 @@ GUEST_TOKEN_JWT_ALGO = "HS256"
 GUEST_ROLE_NAME = env_str("GUEST_ROLE_NAME", "Gamma")
 # Token lifetime in seconds
 GUEST_TOKEN_EXP_SECONDS = env_int("GUEST_TOKEN_EXP_SECONDS", "600")
+# Audience validation for JWT guest tokens (string or callable; None disables validation)
+GUEST_TOKEN_JWT_AUDIENCE = env_str("GUEST_TOKEN_JWT_AUDIENCE", None)
 
 # =============================
 # Security headers / CSP for embedding (environment-driven)
