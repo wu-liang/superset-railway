@@ -51,6 +51,7 @@ SUPERSET_LOG_LEVEL = env_str("SUPERSET_LOG_LEVEL", "INFO")
 FEATURE_FLAGS = {
     # Embedded dashboards / SDK (shows "Embed dashboard" menu)
     "EMBEDDED_SUPERSET": True,
+    "TAGGING_SYSTEM": True,
 
     # Alerts & Reports
     "ALERT_REPORTS": True,
