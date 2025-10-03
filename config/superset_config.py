@@ -52,6 +52,7 @@ FEATURE_FLAGS = {
     # Embedded dashboards / SDK (shows "Embed dashboard" menu)
     "EMBEDDED_SUPERSET": True,
     "TAGGING_SYSTEM": True,
+    "ENABLE_TEMPLATE_PROCESSING": True,
 
     # Alerts & Reports
     "ALERT_REPORTS": True,
