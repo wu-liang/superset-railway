@@ -71,6 +71,8 @@ FEATURE_FLAGS = {
 # =============================
 # Use the same Redis for caches, Celery, and rate-limit storage.
 REDIS_URL = env_str("REDIS_URL", "redis://redis:6379/0")
+DATA_CACHE_DEFAULT_TIMEOUT = env_str("DATA_CACHE_DEFAULT_TIMEOUT", 86400)
+EXPLORE_FORM_DATA_CACHE_DEFAULT_TIMEOUT = env_str("EXPLORE_FORM_DATA_CACHE_DEFAULT_TIMEOUT", 86400)
 
 CACHE_CONFIG = {
     "CACHE_TYPE": "RedisCache",
@@ -81,14 +83,14 @@ CACHE_CONFIG = {
 
 EXPLORE_FORM_DATA_CACHE_CONFIG = {
     "CACHE_TYPE": "RedisCache",
-    "CACHE_DEFAULT_TIMEOUT": 86400,
+    "CACHE_DEFAULT_TIMEOUT": EXPLORE_FORM_DATA_CACHE_DEFAULT_TIMEOUT,
     "CACHE_KEY_PREFIX": "superset_explore_cache",
     "CACHE_REDIS_URL": REDIS_URL,
 }
 
 DATA_CACHE_CONFIG = {
     "CACHE_TYPE": "RedisCache",
-    "CACHE_DEFAULT_TIMEOUT": 86400,
+    "CACHE_DEFAULT_TIMEOUT": DATA_CACHE_DEFAULT_TIMEOUT,
     "CACHE_KEY_PREFIX": "superset_data_cache",
     "CACHE_REDIS_URL": REDIS_URL,
 }
