@@ -41,6 +41,9 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 # so Superset respects X-Forwarded-* headers for scheme/host.
 ENABLE_PROXY_FIX = True
 
+# Required for Superset 6.0+ (FAB 5.0): exposes security/role management API to the frontend.
+FAB_ADD_SECURITY_API = True
+
 # Logging level for Superset (DEBUG for detailed logs during troubleshooting)
 SUPERSET_LOG_LEVEL = env_str("SUPERSET_LOG_LEVEL", "INFO")
 

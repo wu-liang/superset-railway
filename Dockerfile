@@ -1,4 +1,4 @@
-FROM apache/superset:${TAG:-5.0.0}
+FROM apache/superset:${TAG:-6.0.0}
 
 # Switch to root user for installation
 USER root
