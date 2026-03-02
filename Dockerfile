@@ -6,24 +6,24 @@ USER root
 # Set Playwright environment variable for browser path
 ENV PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright-browsers
 
-# Install system FreeTDS and OpenSSL dev libraries for building pymssql from source.
-# Superset 6.0 uses Debian Trixie with OpenSSL 3.5, which breaks pre-built pymssql wheels.
+# Install Microsoft ODBC Driver 18 for SQL Server (Azure SQL compatible).
+# Superset 6.0 uses Debian Trixie with OpenSSL 3.5 which breaks pymssql's TLS handshake,
+# so we use Microsoft's official ODBC driver instead.
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends freetds-dev libssl-dev libkrb5-dev gcc && \
+    apt-get install -y --no-install-recommends curl gnupg2 && \
+    curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg && \
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-prod.gpg] https://packages.microsoft.com/debian/12/prod bookworm main" > /etc/apt/sources.list.d/mssql-release.list && \
+    apt-get update && \
+    ACCEPT_EULA=Y apt-get install -y --no-install-recommends msodbcsql18 unixodbc-dev && \
     rm -rf /var/lib/apt/lists/*
 
-# Configure FreeTDS for Azure SQL: require TDS 7.4 and encryption
-RUN printf '[global]\ntds version = 7.4\nencryption = require\n' > /etc/freetds/freetds.conf
-ENV FREETDSCONF=/etc/freetds/freetds.conf
-
 # Activate virtual environment and install required packages
-# pymssql is built from source (--no-binary) to link against system FreeTDS/OpenSSL
 RUN . /app/.venv/bin/activate && \
-    uv pip install --no-binary pymssql \
+    uv pip install \
     # Database driver for PostgreSQL (replace with mysqlclient for MySQL)
     psycopg2-binary \
-    # Database driver for Microsoft SQL Server (built from source for TLS compatibility)
-    pymssql \
+    # Database driver for Microsoft SQL Server (via ODBC Driver 18)
+    pyodbc \
     # Authentication for SSO
     Authlib \
     # Excel file upload support
