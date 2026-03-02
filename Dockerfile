@@ -20,6 +20,8 @@ RUN apt-get update && \
 # Activate virtual environment and install required packages
 RUN . /app/.venv/bin/activate && \
     uv pip install \
+    # Fix sqlglot CEILING->CEIL bug in Superset 6.0 (github.com/apache/superset/issues/37778)
+    "sqlglot>=28.10.0,<29" \
     # Database driver for PostgreSQL (replace with mysqlclient for MySQL)
     psycopg2-binary \
     # Database driver for Microsoft SQL Server (via ODBC Driver 18)
