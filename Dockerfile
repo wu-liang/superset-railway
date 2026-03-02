@@ -9,7 +9,7 @@ ENV PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright-browsers
 # Install system FreeTDS and OpenSSL dev libraries for building pymssql from source.
 # Superset 6.0 uses Debian Trixie with OpenSSL 3.5, which breaks pre-built pymssql wheels.
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends freetds-dev libssl-dev gcc && \
+    apt-get install -y --no-install-recommends freetds-dev libssl-dev libkrb5-dev gcc && \
     rm -rf /var/lib/apt/lists/*
 
 # Configure FreeTDS for Azure SQL: require TDS 7.4 and encryption
